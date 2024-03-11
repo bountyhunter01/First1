@@ -17,6 +17,7 @@ class Player
     public int Hp;
     public int Att;
     public int Df;
+    public int MonsterHp = 10; // 몬스터의 체력을 추가
 
     public void Fight()
     {
@@ -24,8 +25,8 @@ class Player
 
         while (true)
         {
-            bool isDefend = random.NextDouble() < 0.52; // 방어랜덤숫자
-            bool isAtt = random.NextDouble() < 0.98;//공격랜덤 숫자
+            bool isDefend = random.NextDouble() < 0.52; // 방어 랜덤 숫자
+            bool isAtt = random.NextDouble() < 0.38; // 공격 랜덤 숫자
 
             if (isDefend)
             {
@@ -44,12 +45,15 @@ class Player
 
                 Console.WriteLine("몬스터가 플레이어를 공격합니다\n");
             }
-             if (isAtt) {
+            if (isAtt)
+            {
+                MonsterHp -= Att; // 플레이어가 몬스터를 공격할 때마다 몬스터의 체력을 감소
                 Console.WriteLine("플레이어가 몬스터를 공격합니다\n");
-            }
-            else {
-                Console.WriteLine("몬스터가 쓰러졌습니다!!");
-                break ;
+                if (MonsterHp <= 0)
+                {
+                    Console.WriteLine("몬스터가 쓰러졌습니다!!");
+                    break;
+                }
             }
         }
     }
@@ -61,7 +65,6 @@ namespace second2
     {
         static void Main(string[] args)
         {
-            //bool endApp = false;
             Console.WriteLine("몬스터가 출현했다\r");
             Console.WriteLine("(っ °Д °;)っ");
 
@@ -73,11 +76,6 @@ namespace second2
 
             NewPlayer.Fight();
             Console.ReadLine();
-            //Console.Write("Press 'n' and Enter to close the app, or press any other key and Enter to continue: ");
-            //if (Console.ReadLine() == "n") endApp = true;
-
-            // Console.WriteLine("\n");
-            // return;
         }
     }
 }
